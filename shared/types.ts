@@ -1,5 +1,6 @@
 export type GenerateSummaryRequest = {
   url: string
+  userPrompt?: string | null
 }
 
 export type GenerateSummaryErrorResponse = {

@@ -3,6 +3,7 @@ import { YoutubeTranscript, YoutubeTranscriptError } from "youtube-transcript"
 
 import type { PlasmoMessaging } from "@plasmohq/messaging"
 
+import { DEFAULT_USER_PROMPT } from "~shared/config"
 import {
   type GenerateSummaryRequest,
   type GenerateSummaryResponse
@@ -12,7 +13,8 @@ const handler: PlasmoMessaging.MessageHandler<
   GenerateSummaryRequest,
   GenerateSummaryResponse
 > = async (req, res) => {
-  const { url } = req.body
+  const { url, userPrompt } = req.body
+  const prompt = !!userPrompt ? userPrompt : DEFAULT_USER_PROMPT
 
   try {
     const transcriptResponses = await YoutubeTranscript.fetchTranscript(url)
@@ -33,7 +35,7 @@ const handler: PlasmoMessaging.MessageHandler<
         },
         {
           role: "user",
-          content: "What is this video about?"
+          content: prompt
         }
       ]
     })

@@ -6,6 +6,7 @@ import { TailSpin } from "react-loader-spinner"
 
 import { sendToBackground } from "@plasmohq/messaging"
 
+import { DEFAULT_USER_PROMPT } from "~shared/config"
 import type {
   GenerateSummaryErrorResponse,
   GenerateSummaryResponse,
@@ -15,6 +16,7 @@ import type {
 function IndexPopup() {
   const [summary, setSummary] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [userPrompt, setUserPrompt] = useState<string>(DEFAULT_USER_PROMPT)
 
   const handleGenerateSummary = async () => {
     setIsLoading(true)
@@ -42,6 +44,12 @@ function IndexPopup() {
   return (
     <div className="w-96 p-4 flex flex-col">
       <h1 className="text-2xl font-normal text-center">Stop Yapping</h1>
+      <input
+        className="bg-slate-200 mt-2 rounded p-2"
+        placeholder={`Enter your prompt here (Default to '${DEFAULT_USER_PROMPT}')`}
+        value={userPrompt}
+        onChange={(e) => setUserPrompt(e.target.value)}
+      />
 
       {!isLoading && (
         <button
