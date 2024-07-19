@@ -3,6 +3,7 @@ import { useState } from "react"
 import { sendToBackground } from "@plasmohq/messaging"
 
 import type {
+  GenerateSummaryErrorResponse,
   GenerateSummaryResponse,
   GenerateSummarySuccessResponse
 } from "~shared/types"
@@ -23,6 +24,10 @@ function IndexPopup() {
 
     if (response.metadata.success === true) {
       setSummary((response as GenerateSummarySuccessResponse).summary)
+    } else {
+      setSummary(
+        `An error occurred while generating the summary. Errors: ${JSON.stringify((response as GenerateSummaryErrorResponse).errors)}`
+      )
     }
   }
 
