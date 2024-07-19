@@ -9,6 +9,7 @@ import { sendToBackground } from "@plasmohq/messaging"
 import { DEFAULT_USER_PROMPT } from "~shared/config"
 import type {
   GenerateSummaryErrorResponse,
+  GenerateSummaryRequest,
   GenerateSummaryResponse,
   GenerateSummarySuccessResponse
 } from "~shared/types"
@@ -24,12 +25,14 @@ function IndexPopup() {
     const tabs = await chrome.tabs.query({ active: true, currentWindow: true })
     const currentUrl = tabs[0].url
 
-    const response: GenerateSummaryResponse = await sendToBackground({
-      name: "generateSummary",
-      body: {
-        url: currentUrl
-      }
-    })
+    const response: GenerateSummaryResponse =
+      await sendToBackground<GenerateSummaryRequest>({
+        name: "generateSummary",
+        body: {
+          url: currentUrl,
+          userPrompt
+        }
+      })
 
     if (response.metadata.success === true) {
       setSummary((response as GenerateSummarySuccessResponse).summary)
