@@ -3,8 +3,23 @@ import { YoutubeTranscript } from "youtube-transcript"
 
 import type { PlasmoMessaging } from "@plasmohq/messaging"
 
-const handler: PlasmoMessaging.MessageHandler = async (req, res) => {
-  const url: string = req.body.url
+import {
+  GenerateSummaryRequestSchema,
+  type GenerateSummaryRequest,
+  type GenerateSummaryResponse
+} from "~shared/types"
+
+const handler: PlasmoMessaging.MessageHandler<
+  GenerateSummaryRequest,
+  GenerateSummaryResponse
+> = async (req, res) => {
+  const parseResult = GenerateSummaryRequestSchema.safeParse(req.body)
+
+  if (!parseResult.success) {
+    return res.send({ errors: parseResult.error.errors })
+  }
+
+  const { url } = parseResult.data
 
   const transcriptResponses = await YoutubeTranscript.fetchTranscript(url)
 

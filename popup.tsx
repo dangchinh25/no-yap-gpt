@@ -2,6 +2,11 @@ import { useState } from "react"
 
 import { sendToBackground } from "@plasmohq/messaging"
 
+import type {
+  GenerateSummaryResponse,
+  GenerateSummarySuccessResponse
+} from "~shared/types"
+
 function IndexPopup() {
   const [summary, setSummary] = useState<string | null>(null)
 
@@ -9,14 +14,16 @@ function IndexPopup() {
     const tabs = await chrome.tabs.query({ active: true, currentWindow: true })
     const currentUrl = tabs[0].url
 
-    const response = await sendToBackground({
+    const response: GenerateSummaryResponse = await sendToBackground({
       name: "generateSummary",
       body: {
         url: currentUrl
       }
     })
 
-    setSummary(response.summary)
+    if (response.metadata.success === true) {
+      setSummary((response as GenerateSummarySuccessResponse).summary)
+    }
   }
 
   return (
