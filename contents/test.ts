@@ -3,8 +3,6 @@ import {sendToBackground} from '@plasmohq/messaging'
  
 export const config: PlasmoCSConfig = {
     matches: [
-        "https://www.plasmo.com/*",
-        "https://docs.plasmo.com/*",
         "https://www.youtube.com/watch?v=*",
     ],
     all_frames: true
@@ -14,9 +12,12 @@ console.log(
 "This is a test content script"
 )
 
+const currentUrl = window.location.href;
+
 sendToBackground({
     name: "ping",
     body: {
-        id: 123
+        id: 123,
+        url: currentUrl
     }
     })
