@@ -1,5 +1,8 @@
 This is a [Plasmo extension](https://docs.plasmo.com/) project bootstrapped with [`plasmo init`](https://www.npmjs.com/package/plasmo).
 
+<img width="1759" alt="image" src="https://github.com/user-attachments/assets/0859da99-85a4-49d0-bce2-da60ef21d332">
+
+
 ## Getting Started
 
 First, create your own OpenAI API key and put it in as environment variable
