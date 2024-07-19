@@ -1,4 +1,5 @@
 import type { PlasmoCSConfig } from "plasmo"
+import {sendToBackground} from '@plasmohq/messaging'
  
 export const config: PlasmoCSConfig = {
     matches: [
@@ -12,3 +13,10 @@ export const config: PlasmoCSConfig = {
 console.log(
 "This is a test content script"
 )
+
+sendToBackground({
+    name: "ping",
+    body: {
+        id: 123
+    }
+    })
