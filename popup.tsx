@@ -1,7 +1,22 @@
-import { useState } from "react"
+import { sendToBackground } from "@plasmohq/messaging"
+import {useState}from "react"
 
 function IndexPopup() {
-  const [data, setData] = useState("")
+  const [summary, setSummary] = useState<string|null>(null)
+
+  const handleGenerateSummary = async () => {
+    const tabs = await chrome.tabs.query({ active: true, currentWindow: true })
+    const currentUrl = tabs[0].url
+
+    const response = await sendToBackground({
+      name: 'generateSummary',
+      body: {
+        url: currentUrl
+      }
+    })
+
+    setSummary(response.summary)
+  }
 
   return (
     <div
@@ -15,10 +30,8 @@ function IndexPopup() {
         </a>{" "}
         Extension!
       </h2>
-      <input onChange={(e) => setData(e.target.value)} value={data} />
-      <a href="https://docs.plasmo.com" target="_blank">
-        View Docs
-      </a>
+      <button onClick={handleGenerateSummary}>Generate summary</button>
+      {summary && <p>{summary}</p>}
     </div>
   )
 }

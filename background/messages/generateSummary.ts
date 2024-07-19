@@ -9,10 +9,6 @@ const handler: PlasmoMessaging.MessageHandler = async (req, res) => {
         url
       );
 
-    console.log(transcriptResponses)
-
-    console.log('key', process.env.PLASMO_PUBLIC_OPENAI_API_KEY)
-
     const contents = transcriptResponses.map(chunk => chunk.text)
 
     const openai = new OpenAI({
@@ -33,7 +29,7 @@ const handler: PlasmoMessaging.MessageHandler = async (req, res) => {
         ]
     })
 
-    console.log(response.choices[0].message.content)
+    return res.send({summary: response.choices[0].message.content})
 }
  
 export default handler
