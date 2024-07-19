@@ -15,6 +15,14 @@ const handler: PlasmoMessaging.MessageHandler<
 > = async (req, res) => {
   const { url, userPrompt } = req.body
   const prompt = !!userPrompt ? userPrompt : DEFAULT_USER_PROMPT
+  const openaiApiKey = process.env.PLASMO_PUBLIC_OPENAI_API_KEY
+
+  if (!openaiApiKey) {
+    return res.send({
+      errors: ["OpenAI API key is not set"],
+      metadata: { success: false }
+    })
+  }
 
   try {
     const transcriptResponses = await YoutubeTranscript.fetchTranscript(url)
