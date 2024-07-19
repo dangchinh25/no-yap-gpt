@@ -1,2 +1,1 @@
-console.log(
-"This is an entry to Background SW"  )
+console.log("This is an entry to Background SW")

@@ -1,15 +1,16 @@
+import { useState } from "react"
+
 import { sendToBackground } from "@plasmohq/messaging"
-import {useState}from "react"
 
 function IndexPopup() {
-  const [summary, setSummary] = useState<string|null>(null)
+  const [summary, setSummary] = useState<string | null>(null)
 
   const handleGenerateSummary = async () => {
     const tabs = await chrome.tabs.query({ active: true, currentWindow: true })
     const currentUrl = tabs[0].url
 
     const response = await sendToBackground({
-      name: 'generateSummary',
+      name: "generateSummary",
       body: {
         url: currentUrl
       }
