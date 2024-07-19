@@ -2,6 +2,8 @@ import { useState } from "react"
 
 import "./style.css"
 
+//@ts-ignore
+import PopNemo from "assets/popnemo-yap.gif"
 import { TailSpin } from "react-loader-spinner"
 
 import { sendToBackground } from "@plasmohq/messaging"
@@ -46,7 +48,10 @@ function IndexPopup() {
 
   return (
     <div className="w-96 p-4 flex flex-col">
-      <h1 className="text-2xl font-normal text-center">Stop Yapping</h1>
+      <div className="flex items-center justify-center">
+        <h1 className="text-2xl font-normal h-10 mr-2">Stop Yapping</h1>
+        <img src={PopNemo} className="h-10" />
+      </div>
       <input
         className="bg-slate-200 mt-2 rounded p-2"
         placeholder={`Enter your prompt here (Default to '${DEFAULT_USER_PROMPT}')`}
