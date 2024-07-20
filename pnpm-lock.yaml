@@ -11,6 +11,9 @@ dependencies:
   '@plasmohq/storage':
     specifier: ^1.11.0
     version: 1.11.0(react@18.2.0)
+  dedent:
+    specifier: ^1.5.3
+    version: 1.5.3
   openai:
     specifier: ^4.52.7
     version: 4.52.7
@@ -41,8 +44,8 @@ devDependencies:
     specifier: 0.0.258
     version: 0.0.258
   '@types/node':
-    specifier: 20.11.5
-    version: 20.11.5
+    specifier: ^20.14.0
+    version: 20.14.11
   '@types/react':
     specifier: 18.2.48
     version: 18.2.48
@@ -62,8 +65,8 @@ devDependencies:
     specifier: ^3.4.6
     version: 3.4.6
   typescript:
-    specifier: 5.3.3
-    version: 5.3.3
+    specifier: ^5.4.5
+    version: 5.5.3
 
 packages:
 
@@ -2731,7 +2734,7 @@ packages:
   /@types/node-fetch@2.6.11:
     resolution: {integrity: sha512-24xFj9R5+rfQJLRyM56qh+wnVSYhyXC2tkoBndtY0U+vubqNsYXGjufB2nn8Q6gt0LrARwL6UBtMCSVCwl4B1g==}
     dependencies:
-      '@types/node': 20.11.5
+      '@types/node': 20.14.11
       form-data: 4.0.0
     dev: false
 
@@ -2741,8 +2744,8 @@ packages:
       undici-types: 5.26.5
     dev: false
 
-  /@types/node@20.11.5:
-    resolution: {integrity: sha512-g557vgQjUUfN76MZAN/dt1z3dzcUsimuysco0KeluHgrPdJXkP/XdAURgyO2W9fZWHRtRBiVKzKn8vyOAwlG+w==}
+  /@types/node@20.14.11:
+    resolution: {integrity: sha512-kprQpL8MMeszbz6ojB5/tU8PLN4kesnN8Gjzw349rDlNgsSzg90lAVj3llK99Dh7JON+t9AuscPPFW6mPbTnSA==}
     dependencies:
       undici-types: 5.26.5
 
@@ -3435,6 +3438,15 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       mimic-response: 3.1.0
+    dev: false
+
+  /dedent@1.5.3:
+    resolution: {integrity: sha512-NHQtfOOW68WD8lgypbLA5oT+Bt0xXJhiYvoR6SmmNXZfpzOGXwdKWmcwG8N7PwVVWV3eF/68nmD9BaJSsTBhyQ==}
+    peerDependencies:
+      babel-plugin-macros: ^3.1.0
+    peerDependenciesMeta:
+      babel-plugin-macros:
+        optional: true
     dev: false
 
   /deep-extend@0.6.0:
@@ -5957,8 +5969,8 @@ packages:
     hasBin: true
     dev: false
 
-  /typescript@5.3.3:
-    resolution: {integrity: sha512-pXWcraxM0uxAS+tN0AG/BF2TyqmHO014Z070UsJ+pFvYuRSq8KH8DmWpnbXe0pEPDHXZV3FcAbJkijJ5oNEnWw==}
+  /typescript@5.5.3:
+    resolution: {integrity: sha512-/hreyEujaB0w76zKo6717l3L0o/qEUtRgdvUBvlkhoWeOVMjMuHNHk0BRBzikzuGDqNmPQbg5ifMEqsHLiIUcQ==}
     engines: {node: '>=14.17'}
     hasBin: true
     dev: true

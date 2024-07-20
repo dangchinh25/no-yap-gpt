@@ -1,3 +1,4 @@
+import dedent from "dedent"
 import OpenAI from "openai"
 import { YoutubeTranscript, YoutubeTranscriptError } from "youtube-transcript"
 
@@ -38,8 +39,10 @@ const handler: PlasmoMessaging.MessageHandler<
       messages: [
         {
           role: "system",
-          content: `Act as a helpful assistant that gives detail info about Youtube video given a transcript:
-                Transcripts: ${contents}`
+          content: dedent`
+            Act as a helpful assistant that gives detail info about Youtube video given a transcript:
+            Transcripts: ${contents}
+          `
         },
         {
           role: "user",

@@ -1,5 +1,4 @@
 {
-  "extends": "plasmo/templates/tsconfig.base",
   "exclude": [
     "node_modules"
   ],
@@ -14,6 +13,7 @@
         "./*"
       ]
     },
-    "baseUrl": "."
+    "baseUrl": ".",
+    "jsx": "preserve",
   }
 }
