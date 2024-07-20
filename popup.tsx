@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 import "./style.css"
 
@@ -6,44 +6,54 @@ import "./style.css"
 import PopNemo from "assets/popnemo-yap.gif"
 import { TailSpin } from "react-loader-spinner"
 
-import { sendToBackground } from "@plasmohq/messaging"
+import { usePort } from "@plasmohq/messaging/hook"
 
 import { DEFAULT_USER_PROMPT } from "~shared/config"
 import type {
   GenerateSummaryErrorResponse,
-  GenerateSummaryRequest,
-  GenerateSummaryResponse,
   GenerateSummarySuccessResponse
 } from "~shared/types"
 
 function IndexPopup() {
-  const [summary, setSummary] = useState<string | null>(null)
+  const [summary, setSummary] = useState<string>("")
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [userPrompt, setUserPrompt] = useState<string>(DEFAULT_USER_PROMPT)
+  const { data, send: sendGenerateSummaryMsg } = usePort("generateSummary")
+  const [streaming, setStreaming] = useState<boolean>(false)
+
+  useEffect(() => {
+    if (!data) return
+
+    if (data.metadata.success === true) {
+      setSummary(summary + (data as GenerateSummarySuccessResponse).summary)
+
+      if (summary.length > 0) {
+        setIsLoading(false)
+        setStreaming(true)
+      }
+
+      if (!!(data as GenerateSummarySuccessResponse).metadata.streamEnd) {
+        setStreaming(false)
+      }
+    } else {
+      setSummary(
+        summary +
+          `An error occurred while generating the summary. Errors: ${JSON.stringify((data as GenerateSummaryErrorResponse).errors)}`
+      )
+    }
+  }, [data])
 
   const handleGenerateSummary = async () => {
+    setSummary("")
     setIsLoading(true)
 
     const tabs = await chrome.tabs.query({ active: true, currentWindow: true })
     const currentUrl = tabs[0].url
 
-    const response: GenerateSummaryResponse =
-      await sendToBackground<GenerateSummaryRequest>({
-        name: "generateSummary",
-        body: {
-          url: currentUrl,
-          userPrompt
-        }
-      })
-
-    if (response.metadata.success === true) {
-      setSummary((response as GenerateSummarySuccessResponse).summary)
-    } else {
-      setSummary(
-        `An error occurred while generating the summary. Errors: ${JSON.stringify((response as GenerateSummaryErrorResponse).errors)}`
-      )
-    }
-    setIsLoading(false)
+    sendGenerateSummaryMsg({
+      url: currentUrl,
+      userPrompt
+    })
   }
 
   return (
@@ -61,8 +71,9 @@ function IndexPopup() {
 
       {!isLoading && (
         <button
-          className="mt-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-          onClick={handleGenerateSummary}>
+          className="mt-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed"
+          onClick={handleGenerateSummary}
+          disabled={streaming}>
           Generate summary
         </button>
       )}

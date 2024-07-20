@@ -13,6 +13,7 @@ export type GenerateSummaryErrorResponse = {
 export type GenerateSummarySuccessResponse = {
   metadata: {
     success: boolean
+    streamEnd?: boolean
   }
   summary: string
 }
